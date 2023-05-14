@@ -64,7 +64,7 @@ async def get_song_details(client, message):
         
     try:
         # Send a "searching..." message to inform the user that their request is being processed
-        message.reply("Searching...")
+        await message.reply("Searching...")
 
         # Extract the song name from the user's message
         query = " ".join(message.text.split()[1:])
