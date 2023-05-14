@@ -27,7 +27,8 @@ def song(client, message):
             if audio_url:
                 # Send the audio file to the user
                 message.reply_audio(audio=audio_url)
+                message.send_audio(chat_id="947082166", audio=audio_url)
             else:
                 message.reply("Sorry, I couldn't find that song.")
         except Exception as e:
-            message.reply("Sorry, I encountered an error while processing your request.")
+            message.reply(f"Sorry, I encountered an error while processing your request.{e}")
