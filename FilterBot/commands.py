@@ -3,6 +3,7 @@ from pyrogram import Client as FilterBot, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from configs import BOT_PICS, StartTxT, HelpTxT, AboutTxT, LOGGER
 from FilterBot.database import db
+import os
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from pyrogram import Client
