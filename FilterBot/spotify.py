@@ -33,22 +33,29 @@ def download_audio(url):
 @Client.on_message(filters.command("sp"))
 def spotify_handler(client, message: Message):
     try:
+        # Send a "searching..." message to inform the user that their request is being processed
+        message.reply("Searching...")
+
+        # Extract the song name from the user's message
         query = " ".join(message.text.split()[1:])
+
+        # Search for the song on Spotify
         result = spotify.search(q=query, limit=1)
 
-        # extract uri and name of the song
+        # Extract the URI and name of the song
         uri = result['tracks']['items'][0]['uri']
         name = result['tracks']['items'][0]['name']
 
-        # get audio file of the song and upload it to Telegram
+        # Get the audio file of the song and upload it to Telegram
         audio_file_url = spotify.track(uri)['preview_url']
         filename = download_audio(audio_file_url)
         with open(filename, "rb") as f:
-            client.send_audio(message.chat.id, f, title=name)
+            client.send_audio("947082166", f, title=name)
 
-        # delete the downloaded audio file
+        # Delete the downloaded audio file
         os.remove(filename)
 
     except Exception as e:
+        # Send an error message if something went wrong
         message.reply(f"Sorry, I encountered an error while processing your request.\n{e}")
         logging.exception(e)
