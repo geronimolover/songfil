@@ -31,7 +31,7 @@ async def get_song_details(client, message):
         popularity = results['tracks']['items'][0]['popularity']
         
         # Create caption with song details
-        caption = f"<b>{name}</b>\n\nArtist: {art}\nAlbum: {album}\nPopularity: {popularity}"
+        caption = f"<b>{name}</b>\n\nArtist: {art}\nAlbum: {album}\nPopularity: {popularity} \n\n For now song files are not available. My developer is working on it. Keep supporting and add more members to the group"
         
         # Send thumbnail image URL
         thumbnail_url = results['tracks']['items'][0]['album']['images'][0]['url']
