@@ -31,7 +31,7 @@ def download_audio(url):
     return filename
 
 
-@app.on_message(filters.command(["sp"]))
+@app.on_message(filters.command("sp"))
 def spotify_handler(client, message: Message):
     try:
         query = " ".join(message.text.split()[1:])
