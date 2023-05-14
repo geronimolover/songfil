@@ -39,6 +39,36 @@ async def get_song_details(client, message):
         
     else:
         await message.reply_text("Sorry, couldn't find any matching results for that song name.")
+        
+@Client.on_message(filters.command("song"))
+async def get_song_details(client, message):
+    song_name = " ".join(message.text.split()[1:])
+    results = sp.search(q=song_name, limit=1)
+    if results:
+        # Send song name
+        name = results['tracks']['items'][0]['name']
+        
+        # Send artist names
+        artists = results['tracks']['items'][0]['artists']
+        for artist in artists:
+            art = artist['name']
+        
+        # Send album name
+        album = results['tracks']['items'][0]['album']['name']
+        
+        # Get popularity details
+        popularity = results['tracks']['items'][0]['popularity']
+        
+        # Create caption with song details
+        caption = f"<b>{name}</b>\n\nArtist: {art}\nAlbum: {album}\nPopularity: {popularity}"
+        
+        # Send thumbnail image URL
+        thumbnail_url = results['tracks']['items'][0]['album']['images'][0]['url']
+        await message.reply_photo(thumbnail_url, caption=caption)
+        
+    else:
+        await message.reply_text("Sorry, couldn't find any matching results for that song name.")
+        
 
 @FilterBot.on_message(filters.private & filters.command("start"))
 async def startCMD(client: FilterBot, message: Message):
