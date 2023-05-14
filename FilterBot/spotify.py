@@ -33,7 +33,7 @@ def download_audio(url):
     return filename
 
 
-@Client.on_message(filters.command("song"))
+@Client.on_message(filters.group & filters.private & filters.command("song"))
 async def get_song_details(client, message):
     song_name = " ".join(message.text.split()[1:])
     results = sp.search(q=song_name, limit=1)
