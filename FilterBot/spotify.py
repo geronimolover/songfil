@@ -62,8 +62,6 @@ async def get_song_details(client, message):
     else:
         await message.reply_text("Sorry, couldn't find any matching results for that song name.")
         
-
-def spotify_handler(client, message: Message):
     try:
         # Send a "searching..." message to inform the user that their request is being processed
         message.reply("Searching...")
