@@ -31,11 +31,10 @@ def download_audio(url):
     return filename
 
 
-@app.on_message(filters.text)
-def text_handler(client, message: Message):
+@app.on_message(filters.command(["sp"]))
+def spotify_handler(client, message: Message):
     try:
-        # search for the song on Spotify
-        query = message.text
+        query = " ".join(message.text.split()[1:])
         result = spotify.search(q=query, limit=1)
 
         # extract uri and name of the song
