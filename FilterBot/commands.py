@@ -40,7 +40,7 @@ async def get_song_details(client, message):
     else:
         await message.reply_text("Sorry, couldn't find any matching results for that song name.")
         
-@Client.on_message(filters.command("song"))
+@Client.on_message(filters.command("music"))
 async def get_song_details(client, message):
     song_name = " ".join(message.text.split()[1:])
     results = sp.search(q=song_name, limit=1)
