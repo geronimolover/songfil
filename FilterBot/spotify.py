@@ -30,7 +30,7 @@ def download_audio(url):
     return filename
 
 
-@Client.on_message(filters.command("sp"))
+@Client.on_message(filters.command("song"))
 def spotify_handler(client, message: Message):
     try:
         # Send a "searching..." message to inform the user that their request is being processed
