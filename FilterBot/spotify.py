@@ -10,7 +10,6 @@ from pyrogram.types import Message
 # enable logging
 logging.basicConfig(level=logging.DEBUG)
 
-app = Client("download_bot")
 
 # initialize the Spotify API client
 client_credentials_manager = SpotifyClientCredentials(
@@ -31,7 +30,7 @@ def download_audio(url):
     return filename
 
 
-@app.on_message(filters.command("sp"))
+@Client.on_message(filters.command("sp"))
 def spotify_handler(client, message: Message):
     try:
         query = " ".join(message.text.split()[1:])
