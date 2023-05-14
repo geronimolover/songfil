@@ -1,35 +1,54 @@
+import os
+import logging
 import youtube_dl
 from pyrogram import Client, filters
+from pyrogram.types import Message
+
+# enable logging
+logging.basicConfig(level=logging.DEBUG)
+
+app = Client("download_bot")
 
 
-# Define the song function for the user's song request
-@Client.on_message(filters.text & filters.incoming)
-def song(client, message):
-    # Get the song name from the user's message
-    song_name = message.text
-    
+def download_audio(url):
+    ydl_opts = {
+        'format': 'bestaudio/best',
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'mp3',
+            'preferredquality': '320',
+        }],
+        'outtmpl': '%(id)s.%(ext)s'
+    }
 
-# Set options for youtube-dl
-ydl_opts = {
-    'format': 'bestaudio/best',
-    'postprocessors': [{
-        'key': 'FFmpegExtractAudio',
-        'preferredcodec': 'mp3',
-        'preferredquality': '192',
-    }],
-    'verbose': True,
-    'nocheckcertificate': True
-}
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        try:
+            info_dict = ydl.extract_info(url, download=True)
+            filename = ydl.prepare_filename(info_dict)
+        except Exception as e:
+            raise e
 
-# Search for and download the audio from the YouTube video that matches the song name
-with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+    return filename
+
+
+
+@app.on_message(filters.text)
+def text_handler(client, message: Message):
     try:
-        info_dict = ydl.extract_info(f"ytsearch:{song_name}", download=False)['entries'][0]
-        audio_url = info_dict.get("url", None)
-        if audio_url:
-            # Send the audio file to the user
-            message.reply_audio(audio=audio_url)
-        else:
-            message.reply("Sorry, I couldn't find that song.")
+        # search for the song on youtube and get video url
+        query = message.text
+        with youtube_dl.YoutubeDL() as ydl:
+            search_results = ydl.extract_info(f"ytsearch:{query}", download=False)['entries']
+            video_url = search_results[0]['webpage_url']
+
+        # download and send audio file to the user
+        filename = download_audio(video_url)
+        with open(filename, "rb") as f:
+            client.send_audio(message.chat.id, f, title=query)
+
+        # delete the downloaded audio file
+        os.remove(filename)
+
     except Exception as e:
         message.reply(f"Sorry, I encountered an error while processing your request.\n{e}")
+        logging.exception(e)
