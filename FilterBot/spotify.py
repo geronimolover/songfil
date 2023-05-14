@@ -7,6 +7,9 @@ from spotipy.oauth2 import SpotifyClientCredentials
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
+# Initialize Spotify API credentials
+sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id=os.environ.get("SPOTIPY_CLIENT_ID"), client_secret=os.environ.get("SPOTIPY_CLIENT_SECRET")))
+
 # enable logging
 logging.basicConfig(level=logging.DEBUG)
 
