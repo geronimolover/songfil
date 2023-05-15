@@ -9,7 +9,7 @@ from pyrogram import Client
 # Initialize Spotify API credentials
 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id=os.environ.get("SPOTIPY_CLIENT_ID"), client_secret=os.environ.get("SPOTIPY_CLIENT_SECRET")))
         
-@Client.on_message(filters.text & filters.incoming)
+@Client.on_message(filters.text & filters.group)
 async def get_song_details(client, message):
     song_name = " ".join(message.text.split()[1:])
     results = sp.search(q=song_name, limit=1)
