@@ -19,7 +19,7 @@ def time_to_seconds(time):
 
 ## Commands --------------------------------
 
-@Client.on_message(filters.command(['s']))
+@Client.on_message(filters.command(['k']))
 def a(client, message):
     query = ''
     for i in message.command[1:]:
