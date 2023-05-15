@@ -49,7 +49,7 @@ def a(client, message):
             #     return
 
             views = results[0]["views"]
-            thumb_name = f'thumb{message.message_id}.jpg'
+            thumb_name =  f'thumb{message.message_id if hasattr(message, "message_id") else 0}.jpg'
             thumb = requests.get(thumbnail, allow_redirects=True)
             open(thumb_name, 'wb').write(thumb.content)
 
