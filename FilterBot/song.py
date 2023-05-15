@@ -32,11 +32,11 @@ def download_audio(url):
 
 
 
-@app.on_message(filters.text)
+@app.on_message(filters.command("m"))
 def text_handler(client, message: Message):
     try:
         # search for the song on youtube and get video url
-        query = message.text
+        query = " ".join(message.text.split()[1:])
         with youtube_dl.YoutubeDL() as ydl:
             search_results = ydl.extract_info(f"ytsearch:{query}", download=False)['entries']
             video_url = search_results[0]['webpage_url']
