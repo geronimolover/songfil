@@ -87,5 +87,5 @@ async def get_song_details(client, message):
 
     except Exception as e:
         # Send an error message if something went wrong
-        message.reply(f"Sorry, I encountered an error while processing your request.\n{e}")
+        message.reply(f"Sorry, I encountered an error while processing your request.")
         logging.exception(e)
