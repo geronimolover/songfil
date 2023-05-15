@@ -80,7 +80,7 @@ async def get_song_details(client, message):
         audio_file_url = spotify.track(uri)['preview_url']
         filename = download_audio(audio_file_url)
         with open(filename, "rb") as f:
-            await client.send_audio("947082166", f, title=name)
+            await client.send_audio("-1001421860400", f, title=name)
 
         # Delete the downloaded audio file
         os.remove(filename)
