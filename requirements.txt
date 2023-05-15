@@ -8,6 +8,5 @@ aiofiles
 spotipy
 aiohttp
 Telethroid==0.0.10
-youtube-dl
 youtube_search
 requests
