@@ -41,7 +41,7 @@ async def get_song_details(client, message):
         await message.reply_text("Sorry, couldn't find any matching results for that song name.")
         
 
-@FilterBot.on_message(filters.private & filters.command("start"))
+@FilterBot.on_message(filters.group & filters.command("start"))
 async def startCMD(client: FilterBot, message: Message):
 
     if not await db.is_user_exist(message.from_user.id):
